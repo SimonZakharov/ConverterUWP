@@ -1,0 +1,15 @@
+﻿<Page
+    x:Class="ConverterUWP.LoadingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ConverterUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Image Name="LoadingImage" Source="Assets/loading.gif" Width="280" Height="210" Visibility="Collapsed"/>
+        <WebView Name="Browser" Source="https://www.cbr-xml-daily.ru/daily_json.js" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ContentLoading="Browser_ContentLoading" DOMContentLoaded="Browser_DOMContentLoaded" Visibility="Collapsed"/>
+    </Grid>
+</Page>

@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="ConverterUWP.CalcPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ConverterUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="1500" MinWidth="1500" MaxWidth="1500" MinHeight="1000" MaxHeight="1000" SizeChanged="Page_SizeChanged">
+
+    <Grid MinHeight="1000" MinWidth="1500">
+        <TextBlock Name ="HeaderBlock" Text="Конвертер валют" FontWeight="Bold" HorizontalAlignment="Center" FontFamily="Arial" FontSize="50" Margin="0,0,0,890"/>
+        <TextBlock Name ="ErrorBlock" Text="Произошла ошибка при обработке данных. Перезапустите приложение." HorizontalAlignment="Center" FontFamily="Arial" FontSize="25" Margin="0,100,0,850"/>
+        <TextBlock Name ="LeftValuteBlock" Text="Left" HorizontalAlignment="Center" FontFamily="Arial" FontSize="50" Margin="-850,300,0,640"/>
+        <TextBlock Name ="RightValuteBlock" Text="Right" HorizontalAlignment="Left" FontFamily="Arial" FontSize="50" Margin="1050,300,0,640"/>
+        <TextBox Name="LeftBlock" Margin="180,180,978,750" FontSize="50" FontWeight="Bold" BorderBrush="Black" Text="0" KeyUp="LeftBlock_KeyUp"/>
+        <TextBox Name="RightBlock" Width="350" Margin="938,180,212,750" FontSize="50" FontWeight="Bold" BorderBrush="Black" Text="0" RenderTransformOrigin="0.694,0.415" KeyUp="RightBlock_KeyUp" />
+        <Button Name="LeftButtonChange" Width="300" FontSize="25" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-850,0,0,0" HorizontalAlignment="Center" Click="ButtonValuteChange_Click"/>
+        <Button Name="RightButtonChange" Width="300" FontSize="25" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="960,0,0,0" Click="ButtonValuteChange_Click"/>
+        <Image Name="LoadingImage" Source="Assets/arrow.png" Width="280" Height="210" Visibility="Visible" Margin="600,150,620,640"/>
+    </Grid>
+</Page>
