@@ -8,7 +8,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.Foundation;
 
