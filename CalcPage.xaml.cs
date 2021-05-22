@@ -37,43 +37,14 @@ namespace ConverterUWP
             Value,
             Previous
         }
-        private List<VirtualKey> NumKeys = new List<VirtualKey>()
-        {
-            VirtualKey.Number0,
-            VirtualKey.Number1,
-            VirtualKey.Number2,
-            VirtualKey.Number3,
-            VirtualKey.Number4,
-            VirtualKey.Number5,
-            VirtualKey.Number6,
-            VirtualKey.Number7,
-            VirtualKey.Number8,
-            VirtualKey.Number9,
-            VirtualKey.NumberPad0,
-            VirtualKey.NumberPad1,
-            VirtualKey.NumberPad2,
-            VirtualKey.NumberPad3,
-            VirtualKey.NumberPad4,
-            VirtualKey.NumberPad5,
-            VirtualKey.NumberPad6,
-            VirtualKey.NumberPad7,
-            VirtualKey.NumberPad8,
-            VirtualKey.NumberPad9,
-            VirtualKey.Back,
-            VirtualKey.Decimal,
-            VirtualKey.Delete,
-            VirtualKey.Left,
-            VirtualKey.Right,
-            VirtualKey.Up,
-            VirtualKey.Down
-        };
         public static string LeftValuteName = "RUB", RightValuteName = "USD";
         public CalcPage()
         {
             this.InitializeComponent();
             this.UserInterfaceSetup();
             //  возможный способ зафиксировать минимальный размер окна
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(1500, 1000));
+            ApplicationView.PreferredLaunchViewSize = new Size(1366, 600);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
         /// <summary>
         /// При переходе на страницу калькулятора полученный JSON десериализуется в коллекцию объектов класса Valute.
@@ -81,6 +52,7 @@ namespace ConverterUWP
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            this.Width = 1500; this.Height = 1000;
             if (e.Parameter != null)
             {
                 Text = e.Parameter.ToString();
@@ -94,6 +66,9 @@ namespace ConverterUWP
                 else
                 {
                     ErrorBlock.Visibility = Visibility.Visible;
+                    LeftValuteBlock.Text = RightValuteBlock.Text = string.Empty;
+                    LeftButtonChange.Visibility = RightButtonChange.Visibility = Visibility.Collapsed;
+                    LeftBlock.Visibility = RightBlock.Visibility = Visibility.Collapsed;
                     return;
                 }
             }
@@ -174,51 +149,43 @@ namespace ConverterUWP
 
         private void RightBlock_KeyUp(object sender, KeyRoutedEventArgs e)
         {
-            if (NumKeys.Contains(e.Key) || (int)e.Key == 188)
+            if (Valutes.Count() == 0) return;
+            if (string.IsNullOrWhiteSpace(RightBlock.Text))
             {
-                if (string.IsNullOrWhiteSpace(RightBlock.Text))
-                {
-                    LeftBlock.Text = "0";
-                    return;
-                }
-                double right = double.TryParse(RightBlock.Text, out double t1) ? t1 : double.MinValue;
-                if (right == double.MinValue)
-                {
-                    LeftBlock.Text = "???";
-                    return;
-                }
-                var rubAmount = right * Valutes.Find(elem => elem.CharCode == RightValuteBlock.Text).Value;
-                var leftAmount = rubAmount / Valutes.Find(elem => elem.CharCode == LeftValuteBlock.Text).Value;
-                LeftBlock.Text = string.Format("{0:N4}", leftAmount);
-                if (LeftBlock.Text == "0,0000") LeftBlock.Text = "0";
+                LeftBlock.Text = "0";
+                return;
             }
-            else
+            double right = double.TryParse(RightBlock.Text, out double t1) ? t1 : double.MinValue;
+            if (right == double.MinValue)
+            {
                 LeftBlock.Text = "???";
+                return;
+            }
+            var rubAmount = right * Valutes.Find(elem => elem.CharCode == RightValuteBlock.Text).Value;
+            var leftAmount = rubAmount / Valutes.Find(elem => elem.CharCode == LeftValuteBlock.Text).Value;
+            LeftBlock.Text = string.Format("{0:N4}", leftAmount);
+            if (LeftBlock.Text == "0,0000") LeftBlock.Text = "0";
         }
 
         private void LeftBlock_KeyUp(object sender, KeyRoutedEventArgs e)
         {
-            if (NumKeys.Contains(e.Key) || (int)e.Key == 188)
+            if (Valutes.Count() == 0) return;
+            if (string.IsNullOrWhiteSpace(LeftBlock.Text))
             {
-                if (string.IsNullOrWhiteSpace(LeftBlock.Text))
-                {
-                    RightBlock.Text = "0";
-                    return;
-                }
-                RightBlock.Text = string.Empty;
-                double left = double.TryParse(LeftBlock.Text, out double t) ? t : double.MinValue;
-                if (left == double.MinValue)
-                {
-                    RightBlock.Text = "???";
-                    return;
-                }
-                var rubAmount = left * Valutes.Find(elem => elem.CharCode == LeftValuteBlock.Text).Value;
-                var rightAmount = rubAmount / Valutes.Find(elem => elem.CharCode == RightValuteBlock.Text).Value;
-                RightBlock.Text = string.Format("{0:N4}", rightAmount);
-                if (RightBlock.Text == "0,0000") RightBlock.Text = "0";
+                RightBlock.Text = "0";
+                return;
             }
-            else
+            RightBlock.Text = string.Empty;
+            double left = double.TryParse(LeftBlock.Text, out double t) ? t : double.MinValue;
+            if (left == double.MinValue)
+            {
                 RightBlock.Text = "???";
+                return;
+            }
+            var rubAmount = left * Valutes.Find(elem => elem.CharCode == LeftValuteBlock.Text).Value;
+            var rightAmount = rubAmount / Valutes.Find(elem => elem.CharCode == RightValuteBlock.Text).Value;
+            RightBlock.Text = string.Format("{0:N4}", rightAmount);
+            if (RightBlock.Text == "0,0000") RightBlock.Text = "0";
         }
         /// <summary>
         /// Возможный способ зафиксировать минимальный размер окна.

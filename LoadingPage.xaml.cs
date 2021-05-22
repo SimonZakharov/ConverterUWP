@@ -1,4 +1,6 @@
 ﻿using System;
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -13,6 +15,8 @@ namespace ConverterUWP
         {
             this.InitializeComponent();
             this.LoadingImage.Visibility = Visibility.Visible;
+            ApplicationView.PreferredLaunchViewSize = new Size(1366, 600);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
         /// <summary>
         /// Загрузка страницы. Пока содержимое не загружено, логотип загрузки остается видимым.
@@ -37,6 +41,12 @@ namespace ConverterUWP
                 this.LoadingImage.Visibility = Visibility.Collapsed;
                 Frame.Navigate(typeof(CalcPage), s);
             }
+        }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (this.Width < 1300) this.Width = 1300;
+            if (this.Height < 600) this.Height = 600;
         }
     }
 }
