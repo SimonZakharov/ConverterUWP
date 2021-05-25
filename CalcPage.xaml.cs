@@ -161,6 +161,7 @@ namespace ConverterUWP
                 return;
             }
             var rubAmount = right * Valutes.Find(elem => elem.CharCode == RightValuteBlock.Text).Value;
+            rubAmount /= Valutes.Find(elem => elem.CharCode == RightValuteBlock.Text).Nominal;
             var leftAmount = rubAmount / Valutes.Find(elem => elem.CharCode == LeftValuteBlock.Text).Value;
             LeftBlock.Text = string.Format("{0:N4}", leftAmount);
             if (LeftBlock.Text == "0,0000") LeftBlock.Text = "0";
@@ -182,6 +183,7 @@ namespace ConverterUWP
                 return;
             }
             var rubAmount = left * Valutes.Find(elem => elem.CharCode == LeftValuteBlock.Text).Value;
+            rubAmount /= Valutes.Find(elem => elem.CharCode == LeftValuteBlock.Text).Nominal;
             var rightAmount = rubAmount / Valutes.Find(elem => elem.CharCode == RightValuteBlock.Text).Value;
             RightBlock.Text = string.Format("{0:N4}", rightAmount);
             if (RightBlock.Text == "0,0000") RightBlock.Text = "0";

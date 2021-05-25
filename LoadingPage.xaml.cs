@@ -48,5 +48,11 @@ namespace ConverterUWP
             if (this.Width < 1300) this.Width = 1300;
             if (this.Height < 600) this.Height = 600;
         }
+
+        private void Browser_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            if (!args.IsSuccess)
+                Browser.Navigate(new Uri(@"https://www.cbr-xml-daily.ru/daily_json.js"));
+        }
     }
 }

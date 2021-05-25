@@ -10,6 +10,6 @@
 
     <Grid>
         <Image Name="LoadingImage" Source="Assets/loading.gif" Width="280" Height="210" Visibility="Collapsed"/>
-        <WebView Name="Browser" Source="https://www.cbr-xml-daily.ru/daily_json.js" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ContentLoading="Browser_ContentLoading" DOMContentLoaded="Browser_DOMContentLoaded" Visibility="Collapsed"/>
+        <WebView Name="Browser" Source="https://www.cbr-xml-daily.ru/daily_json.js" HorizontalAlignment="Stretch" NavigationCompleted="Browser_NavigationCompleted" VerticalAlignment="Stretch" ContentLoading="Browser_ContentLoading" DOMContentLoaded="Browser_DOMContentLoaded" Visibility="Collapsed"/>
     </Grid>
 </Page>
